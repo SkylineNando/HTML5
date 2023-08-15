@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adicionar aos Favoritos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #addToFavorites {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #addToFavorites:hover {
+            background-color: #0056b3;
+        }
+
+        .confirmation-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .confirmation-popup p {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <button id="addToFavorites">Adicionar aos Favoritos</button>
+
+    <div id="confirmationPopup" class="confirmation-popup">
+        <p>Item salvo aos favoritos!</p>
+    </div>
+
+    <script>
+        document.getElementById('addToFavorites').addEventListener('click', function() {
+            var itemId = 123; // ID do item a ser adicionado aos favoritos
+            addToFavorites(itemId);
+        });
+
+        function addToFavorites(itemId) {
+            // Aqui você pode realizar as ações necessárias para adicionar o item aos favoritos.
+            // Por exemplo, adicionar o ID do item a um array no LocalStorage.
+
+            // Exibir o popup de confirmação.
+            var confirmationPopup = document.getElementById('confirmationPopup');
+            confirmationPopup.style.display = 'block';
+
+            // Ocultar o popup após alguns segundos.
+            setTimeout(function() {
+                confirmationPopup.style.display = 'none';
+            }, 3000); // Oculta após 3 segundos.
+        }
+    </script>
+</body>
+</html>
