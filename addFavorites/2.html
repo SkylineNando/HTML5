@@ -1,0 +1,37 @@
+<!-- Página do Item -->
+<button id="addFavorite">Adicionar aos Favoritos</button>
+
+<script>
+document.getElementById('addFavorite').addEventListener('click', function() {
+    // Enviar uma solicitação para adicionar aos favoritos
+    var item_id = 123; // ID do item
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'adicionar_favorito.php?item_id=' + item_id, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                // Item adicionado aos favoritos
+                // Exibir notificação
+                if ('Notification' in window) {
+                    if (Notification.permission === 'granted') {
+                        new Notification('Item adicionado aos favoritos!', {
+                            body: 'Você adicionou um item aos seus favoritos.',
+                            icon: 'icon.png'
+                        });
+                    } else {
+                        Notification.requestPermission().then(function(permission) {
+                            if (permission === 'granted') {
+                                new Notification('Item adicionado aos favoritos!', {
+                                    body: 'Você adicionou um item aos seus favoritos.',
+                                    icon: 'icon.png'
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    };
+    xhr.send();
+});
+</script>
