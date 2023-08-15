@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Botão de Compartilhamento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .share-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .share-button i {
+            margin-right: 5px;
+        }
+
+        .share-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+            z-index: 1;
+        }
+
+        .share-options a {
+            display: block;
+            margin: 5px 0;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .share-button:hover .share-options {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="share-button">
+    <i class="fas fa-share"></i> Compartilhar
+    <div class="share-options">
+        <a href="#" onclick="shareFacebook()"><i class="fab fa-facebook-square"></i> Compartilhar no Facebook</a>
+        <a href="#" onclick="shareTwitter()"><i class="fab fa-twitter-square"></i> Compartilhar no Twitter</a>
+        <a href="#" onclick="shareWhatsApp()"><i class="fab fa-whatsapp-square"></i> Compartilhar no WhatsApp</a>
+        <a href="#" onclick="shareLinkedIn()"><i class="fab fa-linkedin"></i> Compartilhar no LinkedIn</a>
+        <a href="#" onclick="sharePinterest()"><i class="fab fa-pinterest-square"></i> Compartilhar no Pinterest</a>
+        <a href="#" onclick="shareReddit()"><i class="fab fa-reddit-square"></i> Compartilhar no Reddit</a>
+        <a href="#" onclick="shareTelegram()"><i class="fab fa-telegram"></i> Compartilhar no Telegram</a>
+        <a href="#" onclick="shareEmail()"><i class="fas fa-envelope"></i> Compartilhar por Email</a>
+        <a href="#" onclick="shareMessenger()"><i class="fab fa-facebook-messenger"></i> Compartilhar no Messenger</a>
+        <a href="#" onclick="shareInstagram()"><i class="fab fa-instagram-square"></i> Compartilhar no Instagram</a>
+        <a href="#" onclick="shareSMS()"><i class="fas fa-sms"></i> Compartilhar por SMS</a>
+    </div>
+</div>
+
+<script>
+function shareFacebook() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var facebookShareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+    window.open(facebookShareUrl, '_blank');
+}
+
+function shareTwitter() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var shareText = encodeURIComponent('Confira esta página incrível!');
+    var twitterShareUrl = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareText;
+    window.open(twitterShareUrl, '_blank');
+}
+
+function shareWhatsApp() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var shareText = encodeURIComponent('Confira esta página incrível!');
+    var whatsappShareUrl = 'https://api.whatsapp.com/send?text=' + shareText + ' ' + currentUrl;
+    window.open(whatsappShareUrl, '_blank');
+}
+
+function shareLinkedIn() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var linkedInShareUrl = 'https://www.linkedin.com/shareArticle?url=' + currentUrl;
+    window.open(linkedInShareUrl, '_blank');
+}
+
+function sharePinterest() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var shareText = encodeURIComponent('Confira esta página incrível!');
+    var pinterestShareUrl = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareText;
+    window.open(pinterestShareUrl, '_blank');
+}
+
+function shareReddit() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var redditShareUrl = 'https://www.reddit.com/submit?url=' + currentUrl;
+    window.open(redditShareUrl, '_blank');
+}
+
+function shareTelegram() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var shareText = encodeURIComponent('Confira esta página incrível!');
+    var telegramShareUrl = 'https://t.me/share/url?url=' + currentUrl + '&text=' + shareText;
+    window.open(telegramShareUrl, '_blank');
+}
+
+function shareEmail() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var subject = encodeURIComponent('Confira esta página incrível!');
+    var emailShareUrl = 'mailto:?subject=' + subject + '&body=' + currentUrl;
+    window.location.href = emailShareUrl;
+}
+
+function shareMessenger() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var messengerShareUrl = 'fb-messenger://share/?link=' + currentUrl;
+    window.location.href = messengerShareUrl;
+}
+
+function shareInstagram() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var instagramProfileUrl = 'https://www.instagram.com/SEU_PERFIL_AQUI/';
+    window.open(instagramProfileUrl, '_blank');
+}
+
+function shareSMS() {
+    var currentUrl = encodeURIComponent(window.location.href);
+    var smsShareUrl = 'sms:?body=' + currentUrl;
+    window.location.href = smsShareUrl;
+}
+</script>
+
+</body>
+</html>
