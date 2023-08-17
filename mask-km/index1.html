@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Máscara para Quilômetros</title>
+<script>
+function formatKilometers(input) {
+    // Remove caracteres não numéricos do valor inserido
+    var rawValue = input.value.replace(/[^\d.]/g, '');
+
+    // Converte o valor em um número de ponto flutuante
+    var floatValue = parseFloat(rawValue);
+
+    // Formata o valor como km com 2 casas decimais
+    if (!isNaN(floatValue)) {
+        input.value = floatValue.toFixed(2) + ' km';
+    } else {
+        input.value = ''; // Limpa o campo se a entrada não for válida
+    }
+}
+</script>
+</head>
+<body>
+<h2>Insira a distância em quilômetros:</h2>
+<input type="text" id="kmInput" oninput="formatKilometers(this)">
+</body>
+</html>
