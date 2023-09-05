@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bússola de Hora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .bussola-container {
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+
+        .ponteiro {
+            width: 2px;
+            height: 100px;
+            background-color: #007bff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%);
+        }
+
+        .horas-input {
+            font-size: 24px;
+            border: none;
+            outline: none;
+            text-align: center;
+            width: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="bussola-container">
+        <div class="ponteiro"></div>
+        <input type="text" id="horas" class="horas-input" placeholder="HH:MM" pattern="[0-9]{2}:[0-9]{2}" required>
+    </div>
+
+    <script>
+        const ponteiro = document.querySelector('.ponteiro');
+        const horasInput = document.getElementById('horas');
+
+        // Evento de mousemove para girar o ponteiro
+        document.addEventListener('mousemove', (e) => {
+            const container = document.querySelector('.bussola-container');
+            const centerX = container.clientWidth / 2 + container.getBoundingClientRect().left;
+            const centerY = container.clientHeight / 2 + container.getBoundingClientRect().top;
+
+            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+            const degrees = angle * (180 / Math.PI);
+
+            ponteiro.style.transform = `translateX(-50%) rotate(${degrees}deg)`;
+            horasInput.value = calcularHora(degrees);
+        });
+
+        // Função para calcular a hora com base no ângulo
+        function calcularHora(degrees) {
+            const totalHoras = 12;
+            const horasPorGrau = totalHoras / 360;
+            const horaAtual = Math.floor(degrees * horasPorGrau + 3); // Adiciona 3 horas para compensar o início do ponteiro
+            return horaAtual.toString().padStart(2, '0') + ':00';
+        }
+    </script>
+</body>
+</html>
