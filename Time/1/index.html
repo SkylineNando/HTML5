@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input de Horas</title>
+    <style>
+        .horas-input {
+            font-size: 18px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 150px;
+            text-align: center;
+        }
+
+        .horas-input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Insira a Hora</h1>
+
+    <label for="horas">Hora:</label>
+    <input type="text" id="horas" class="horas-input" placeholder="HH:MM" pattern="[0-9]{2}:[0-9]{2}" required>
+
+    <p>Formato: HH:MM (24 horas)</p>
+</body>
+</html>
