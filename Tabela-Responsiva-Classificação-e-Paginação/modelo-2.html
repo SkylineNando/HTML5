@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabela Responsiva com Classificação e Paginação</title>
+<style>
+    /* Estilo opcional para a tabela */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .pagination {
+        margin-top: 10px;
+    }
+    .pagination button {
+        margin-right: 5px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Exemplo de Tabela Responsiva com Classificação e Paginação</h2>
+
+<div style="overflow-x:auto;">
+    <table id="myTable">
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>João</td>
+                <td>25</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>João</td>
+                <td>25</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>João</td>
+                <td>25</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>João</td>
+                <td>25</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>João</td>
+                <td>25</td>
+                <td>Brasil</td>
+            </tr>
+            <!-- Adicione mais linhas conforme necessário -->
+        </tbody>
+    </table>
+</div>
+
+<div class="pagination">
+    <button id="previousPageBtn" onclick="previousPage()">Anterior</button>
+    <span id="paginationMessage">Exibindo 1-2 de 4 resultados</span>
+    <button id="nextPageBtn" onclick="nextPage()">Próxima</button>
+</div>
+
+<script>
+    // Função para classificar a tabela por coluna
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        // Definindo a direção inicial da classificação como ascendente
+        dir = "asc"; 
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount ++; 
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    // Paginação
+    var rowsPerPage = 2;
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+
+    var currentPage = 1;
+    var paginationMessage = document.getElementById("paginationMessage");
+    var totalRows = rows.length - 1;
+    var totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    if (totalRows === 0) {
+        paginationMessage.textContent = "Não há links curtos cadastros";
+    } else {
+        paginationMessage.textContent = "Exibindo 1-" + Math.min(rowsPerPage, totalRows) + " de " + totalRows + " resultados";
+    }
+
+    function previousPage() {
+        if (currentPage > 1) {
+            showPage(currentPage - 1);
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            showPage(currentPage + 1);
+        }
+    }
+
+    function showPage(page) {
+        currentPage = page;
+        
+        var start = (currentPage - 1) * rowsPerPage + 1;
+        var end = Math.min(start + rowsPerPage - 1, totalRows);
+
+        for (var j = 1; j <= totalRows; j++) {
+            if (j >= start && j <= end) {
+                rows[j].style.display = "";
+            } else {
+                rows[j].style.display = "none";
+            }
+        }
+
+        if (totalRows === 0) {
+            paginationMessage.textContent = "Não há links curtos cadastros";
+        } else {
+            paginationMessage.textContent = "Exibindo " + start + "-" + end + " de " + totalRows + " resultados";
+        }
+
+        updatePagination();
+    }
+
+    function updatePagination() {
+        totalPages = Math.ceil(totalRows / rowsPerPage);
+
+        document.getElementById("previousPageBtn").style.display = currentPage > 1 ? "" : "none";
+        document.getElementById("nextPageBtn").style.display = currentPage < totalPages ? "" : "none";
+    }
+
+    // Chamada inicial para exibir a primeira página
+    showPage(1);
+</script>
+
+</body>
+</html>
