@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabela Responsiva com Classificação e Paginação</title>
+<style>
+    /* Estilo opcional para a tabela */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .pagination {
+        margin-top: 10px;
+    }
+    .pagination button {
+        margin-right: 5px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Exemplo de Tabela Responsiva com Classificação e Paginação</h2>
+
+<div style="overflow-x:auto;">
+    <table id="myTable">
+        <tbody>
+            <tr>
+                <td>João</td>
+                <td>25</td>
+                <td>Brasil</td>
+            </tr>
+            <tr>
+                <td>Maria</td>
+                <td>30</td>
+                <td>Portugal</td>
+            </tr>
+            <tr>
+                <td>John</td>
+                <td>28</td>
+                <td>USA</td>
+            </tr>
+            <tr>
+                <td>Jane</td>
+                <td>22</td>
+                <td>Canada</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="pagination">
+    <button onclick="previousPage()">Anterior</button>
+    <span id="pageNumber">1</span> de <span id="totalPages">1</span>
+    <button onclick="nextPage()">Próxima</button>
+</div>
+
+<script>
+    // Função para classificar a tabela por coluna
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        // Definindo a direção inicial da classificação como ascendente
+        dir = "asc"; 
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount ++; 
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    // Paginação
+    var rowsPerPage = 1;
+    var table = document.getElementById("myTable");
+    var rows = table.rows;
+    var totalPages = Math.ceil((rows.length - 1) / rowsPerPage);
+
+    for (var i = 1; i < rows.length; i++) {
+        if (i > rowsPerPage) {
+            rows[i].style.display = "none";
+        }
+    }
+
+    var currentPage = 1;
+    var pageNumberElement = document.getElementById("pageNumber");
+    var totalPagesElement = document.getElementById("totalPages");
+    pageNumberElement.textContent = currentPage;
+    totalPagesElement.textContent = totalPages;
+
+    function previousPage() {
+        if (currentPage > 1) {
+            showPage(currentPage - 1);
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            showPage(currentPage + 1);
+        }
+    }
+
+    function showPage(page) {
+        currentPage = page;
+        pageNumberElement.textContent = currentPage;
+        var start = (currentPage - 1) * rowsPerPage + 1;
+        var end = Math.min(start + rowsPerPage - 1, rows.length - 1);
+
+        for (var j = 1; j < rows.length; j++) {
+            if (j >= start && j <= end) {
+                rows[j].style.display = "";
+            } else {
+                rows[j].style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
