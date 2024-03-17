@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro</title>
+</head>
+<body>
+    <h1>Cadastro</h1>
+    <label for="name">Nome:</label>
+    <input type="text" id="name" placeholder="Seu nome"><br>
+    <label for="surname">Sobrenome:</label>
+    <input type="text" id="surname" placeholder="Seu sobrenome"><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Seu email"><br>
+    <button onclick="register()">Cadastrar</button>
+
+    <script>
+        async function register() {
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const email = document.getElementById('email').value;
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, surname, email })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                window.location.href = 'verify-code.html';
+            } else {
+                alert(data.message);
+            }
+        }
+    </script>
+</body>
+</html>
