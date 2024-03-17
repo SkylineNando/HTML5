@@ -12,7 +12,7 @@
     <script>
         async function checkEmail() {
             const email = document.getElementById('email').value;
-            const response = await fetch('URL_DO_SEU_BACKEND', {
+            const response = await fetch('http://localhost:3000/check-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -22,9 +22,9 @@
             const data = await response.json();
             if (response.ok) {
                 if (data.exists) {
-                    window.location.href = 'verificar_codigo.html';
+                    window.location.href = 'verify-code.html';
                 } else {
-                    window.location.href = 'cadastro.html';
+                    window.location.href = 'register.html';
                 }
             } else {
                 alert(data.message);
