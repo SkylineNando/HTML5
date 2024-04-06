@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trilhão de Bolas</title>
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+}
+canvas {
+  display: block;
+}
+</style>
+</head>
+<body>
+<canvas id="myCanvas"></canvas>
+<script>
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+let balls = [];
+
+function createBall(x, y, radius, dx, dy, color) {
+  balls.push({ x, y, radius, dx, dy, color });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  balls.forEach(ball => {
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+    ctx.fillStyle = ball.color;
+    ctx.fill();
+    ctx.closePath();
+
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+    ball.radius *= 1.005; // Aumenta o tamanho da bola ao longo do tempo
+
+    if (ball.radius > 100) {
+      ball.radius = 10; // Reinicia o tamanho da bola quando atinge um certo limite
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+
+function init() {
+  for (let i = 0; i < 1000; i++) {
+    createBall(
+      Math.random() * canvas.width,
+      Math.random() * canvas.height,
+      10,
+      Math.random() * 2 - 1, // Velocidade aleatória
+      Math.random() * 2 - 1,
+      `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
+    );
+  }
+
+  draw();
+}
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+init();
+</script>
+</body>
+</html>
