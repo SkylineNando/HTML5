@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walking Animation</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+.person {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 160px; /* Altura aumentada para a cabeça */
+    animation: walk 5s linear infinite alternate; /* Animar de um lado para outro da página */
+}
+
+.head {
+    position: absolute;
+    top: -30px; /* Posicionamento acima do corpo */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+    border-radius: 50%;
+}
+
+.body {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 60px;
+    background-color: #333;
+}
+
+.left-leg,
+.right-leg,
+.left-arm,
+.right-arm {
+    position: absolute;
+    background-color: #333;
+}
+
+.left-leg,
+.right-leg {
+    width: 10px;
+    height: 40px;
+    bottom: 0;
+}
+
+.left-leg {
+    left: 50%; /* Ajuste para conectar à esquerda do corpo */
+    transform-origin: top right;
+    animation: left-leg-animation 0.8s infinite alternate;
+}
+
+.right-leg {
+    left: 60%; /* Ajuste para conectar à direita do corpo */
+    transform-origin: top left;
+    animation: right-leg-animation 0.8s infinite alternate;
+}
+
+.left-arm,
+.right-arm {
+    width: 10px;
+    height: 30px;
+    top: 10px; /* Ajuste para conectar à parte superior do corpo */
+}
+
+.left-arm {
+    left: 40%; /* Ajuste para conectar à esquerda do corpo */
+    transform-origin: bottom right;
+    animation: left-arm-animation 0.8s infinite alternate;
+}
+
+.right-arm {
+    left: 60%; /* Ajuste para conectar à direita do corpo */
+    transform-origin: bottom left;
+    animation: right-arm-animation 0.8s infinite alternate;
+}
+
+@keyframes walk {
+    0% { left: 0; }
+    100% { left: calc(100% - 60px); } /* Movimento de um lado para o outro da página */
+}
+
+@keyframes left-leg-animation {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-30deg); }
+}
+
+@keyframes right-leg-animation {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(30deg); }
+}
+
+@keyframes left-arm-animation {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-45deg); }
+}
+
+@keyframes right-arm-animation {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(45deg); }
+}
+</style>
+</head>
+<body>
+<div class="person">
+    <div class="head"></div>
+    <div class="body"></div>
+    <div class="left-leg"></div>
+    <div class="right-leg"></div>
+    <div class="left-arm"></div>
+    <div class="right-arm"></div>
+</div>
+</body>
+</html>
