@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universo Colorido</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background-color: black;
+  }
+  canvas {
+    display: block;
+  }
+</style>
+</head>
+<body>
+<canvas id="myCanvas"></canvas>
+<script>
+  const canvas = document.getElementById('myCanvas');
+  const ctx = canvas.getContext('2d');
+  const particles = [];
+
+  function createParticle() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    const radius = Math.random() * 3;
+    const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    const dx = Math.random() - 0.5;
+    const dy = Math.random() - 0.5;
+
+    particles.push({ x, y, radius, color, dx, dy });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < particles.length; i++) {
+      const particle = particles[i];
+
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+      ctx.fillStyle = particle.color;
+      ctx.fill();
+
+      particle.x += particle.dx;
+      particle.y += particle.dy;
+
+      // Wrap around
+      if (particle.x - particle.radius > canvas.width) {
+        particle.x = -particle.radius;
+      } else if (particle.x + particle.radius < 0) {
+        particle.x = canvas.width + particle.radius;
+      }
+
+      if (particle.y - particle.radius > canvas.height) {
+        particle.y = -particle.radius;
+      } else if (particle.y + particle.radius < 0) {
+        particle.y = canvas.height + particle.radius;
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  for (let i = 0; i < 1000; i++) {
+    createParticle();
+  }
+
+  draw();
+</script>
+</body>
+</html>
