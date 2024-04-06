@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preloader Example</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000; /* Overlay inicialmente escuro */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: opacity 1s; /* Transição suave da opacidade */
+        opacity: 1; /* Opacidade inicial */
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .content {
+        display: none; /* Oculta o conteúdo enquanto o preloader estiver visível */
+    }
+</style>
+</head>
+<body>
+<div class="preloader">
+    <div class="spinner"></div>
+</div>
+<div class="content">
+    <!-- Seu conteúdo da página aqui -->
+    <h1>Conteúdo da página</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec velit at tellus fermentum ultricies. Duis vel eros nec urna tempus euismod. Quisque rutrum neque id erat pretium, nec varius lacus aliquet.</p>
+</div>
+<script>
+    window.addEventListener("load", function() {
+        // Esconde o preloader e mostra o conteúdo da página após o carregamento completo
+        document.querySelector(".preloader").style.opacity = "0";
+        document.querySelector(".content").style.display = "block";
+    });
+</script>
+</body>
+</html>
