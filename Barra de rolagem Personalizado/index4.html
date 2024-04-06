@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personalizar Barra de Rolagem</title>
+<style>
+    /* Estilos para a barra de rolagem */
+    /* Largura da barra de rolagem */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Cor de fundo da barra de rolagem */
+    ::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
+    /* Cor do botão de rolagem */
+    ::-webkit-scrollbar-thumb {
+        background-color: orange; /* Cor laranja */
+        border-radius: 5px;
+    }
+
+    /* Mudar a cor do botão de rolagem quando passar o mouse */
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #ff9933; /* Laranja mais claro */
+    }
+
+    /* Estilo da barra de rolagem para navegadores Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: orange #f1f1f1; /* Cor laranja */
+
+    /* Cor de fundo da pista da barra de rolagem para Firefox */
+    body {
+        scrollbar-track-color: #f1f1f1;
+    }
+
+    /* Cor do botão de rolagem para Firefox */
+    body::-webkit-scrollbar-thumb {
+        background-color: orange; /* Cor laranja */
+    }
+
+    /* Mudar a cor do botão de rolagem para Firefox quando passar o mouse */
+    body::-webkit-scrollbar-thumb:hover {
+        background-color: #ff9933; /* Laranja mais claro */
+    }
+
+    /* Estilo para a barra de rolagem em dispositivos touch */
+    @media (hover: none) {
+        ::-webkit-scrollbar-thumb {
+            background-color: orange; /* Cor laranja */
+        }
+    }
+</style>
+</head>
+<body>
+    <div style="height: 2000px;">
+        <!-- Conteúdo para gerar uma barra de rolagem -->
+    </div>
+</body>
+</html>
