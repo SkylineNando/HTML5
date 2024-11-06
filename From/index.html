@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Informações</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 900px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            background-color: #fff6e6;
+            color: #b94a00;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ffcd99;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert a {
+            color: #5a5ae6;
+            text-decoration: underline;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #333;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #f3f3f3;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+
+        .tab.active {
+            background-color: #e5e5fe;
+            color: #5a5ae6;
+            border: 1px solid #5a5ae6;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .radio-option {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            cursor: pointer;
+            font-weight: bold;
+            color: #4b5563;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option.active {
+            background-color: #eef2ff;
+            border: 2px solid #6366f1;
+            color: #6366f1;
+        }
+
+        .radio-option:hover {
+            border-color: #6366f1;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .form-section {
+            margin-top: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #fafafa;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon input {
+            padding-left: 40px;
+        }
+
+        .input-icon .icon {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #6366f1;
+        }
+
+        .small-inputs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .small {
+            flex: 1;
+        }
+
+        .button {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .button button {
+            padding: 15px 30px;
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .button button:hover {
+            background-color: #4f46e5;
+        }
+
+        .table-section {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            color: #333;
+        }
+
+        .resumo {
+            background-color: #eef2ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .resumo p {
+            margin: 5px 0;
+            color: #333;
+            font-size: 14px;
+        }
+
+        /* Destaque para opção de pagamento */
+        .radio-option.payment-option {
+            transition: all 0.3s ease;
+        }
+
+        .radio-option.payment-option:hover,
+        .radio-option.payment-option.active {
+            background-color: #eef2ff;
+            border: 2px solid #6366f1;
+            color: #6366f1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Primeira página: Cadastro de informações -->
+<div class="container" id="formPage">
+    <div class="alert">
+        Você precisa completar o seu cadastro antes de começar a vender. <a href="#">Confirme seu cadastro aqui.</a>
+    </div>
+
+    <div class="tabs">
+        <div class="tab">Saques</div>
+        <div class="tab">Dados bancários</div>
+        <div class="tab">Taxas</div>
+        <div class="tab active">Identidade</div>
+    </div>
+
+    <h2 id="tituloEtapa">Passo 1 de 3 - Cadastre suas informações</h2>
+    <p class="subtitle" id="descricaoEtapa">Assim que suas informações de titularidade estiverem completas, você poderá adicionar seus dados bancários para receber pagamentos de maneira rápida e segura.</p>
+
+    <div class="radio-group">
+        <label class="radio-option" id="pj-option" onclick="toggleForm('pj')">
+            <input type="radio" name="tipoPessoa" value="pj"> <i class="fas fa-building"></i> Pessoa jurídica (CNPJ)
+        </label>
+        <label class="radio-option active" id="pf-option" onclick="toggleForm('pf')">
+            <input type="radio" name="tipoPessoa" value="pf" checked> <i class="fas fa-user"></i> Pessoa física (CPF)
+        </label>
+    </div>
+
+    <!-- Formulário para Pessoa Física -->
+    <div id="formPessoaFisica" class="form-section">
+        <h3>Dados do titular da conta</h3>
+        <p class="subtitle">Estas informações são essenciais para a verificação de identidade.</p>
+        
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" placeholder="FERNANDO">
+
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" id="sobrenome" placeholder="BUENO">
+
+        <label for="dataNascimento">Data de nascimento</label>
+        <input type="date" id="dataNascimento" value="2024-11-04">
+
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" placeholder="">
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="fernandobuenoart@gmail.com">
+
+        <label for="telefone">Telefone</label>
+        <div class="input-icon">
+            <i class="fas fa-phone icon"></i>
+            <input type="text" id="telefone" placeholder="+55 (11) 999918425">
+        </div>
+        <!-- Campos de Endereço para Pessoa Física -->
+        <h3>Endereço</h3>
+
+        <label for="cepPF">CEP</label>
+        <input type="text" id="cepPF" placeholder="">
+
+        <div class="small-inputs">
+            <div class="small">
+                <label for="bairroPF">Bairro</label>
+                <input type="text" id="bairroPF" placeholder="">
+            </div>
+            <div class="small">
+                <label for="ruaPF">Rua</label>
+                <input type="text" id="ruaPF" placeholder="">
+            </div>
+            <div class="small">
+                <label for="numeroPF">Número</label>
+                <input type="text" id="numeroPF" placeholder="">
+            </div>
+        </div>
+
+        <label for="complementoPF">Complemento</label>
+        <input type="text" id="complementoPF" placeholder="">
+
+        <label for="cidadePF">Cidade</label>
+        <input type="text" id="cidadePF" placeholder="Teresina de Goiás">
+
+        <label for="estadoPF">Estado</label>
+        <input type="text" id="estadoPF" placeholder="Goiás">
+    </div>
+
+    <!-- Formulário para Pessoa Jurídica -->
+    <div id="formPessoaJuridica" class="form-section hidden">
+        <h3>Dados da empresa</h3>
+        
+        <label for="nomeFantasia">Nome fantasia</label>
+        <input type="text" id="nomeFantasia" placeholder="">
+
+        <label for="razaoSocial">Razão social</label>
+        <input type="text" id="razaoSocial" placeholder="">
+
+        <label for="cnpj">CNPJ</label>
+        <input type="text" id="cnpj" placeholder="">
+
+        <label for="emailPJ">E-mail</label>
+        <input type="email" id="emailPJ" placeholder="">
+
+        <label for="receitaAnual">Receita anual</label>
+        <input type="text" id="receitaAnual" placeholder="R$">
+
+        <h3>Representante legal atrelado à empresa</h3>
+        <p class="subtitle">Estas informações são essenciais para a verificação de identidade.</p>
+
+        <label for="nomeRepresentante">Nome</label>
+        <input type="text" id="nomeRepresentante" placeholder="FERNANDO">
+
+        <label for="sobrenomeRepresentante">Sobrenome</label>
+        <input type="text" id="sobrenomeRepresentante" placeholder="BUENO">
+
+        <label for="dataNascimentoRepresentante">Data de nascimento</label>
+        <input type="date" id="dataNascimentoRepresentante" value="2024-11-04">
+
+        <label for="cpfRepresentante">CPF</label>
+        <input type="text" id="cpfRepresentante" placeholder="">
+
+        <label for="emailRepresentante">E-mail</label>
+        <input type="email" id="emailRepresentante" placeholder="fernandobuenoart@gmail.com">
+
+        <label for="telefoneRepresentante">Telefone</label>
+        <div class="input-icon">
+            <i class="fas fa-phone icon"></i>
+            <input type="text" id="telefoneRepresentante" placeholder="+55 (11) 999918425">
+        </div>
+
+        <label for="ocupacaoProfissional">Ocupação profissional</label>
+        <input type="text" id="ocupacaoProfissional" placeholder="">
+
+        <label for="faturamentoMensal">Faturamento mensal aproximado</label>
+        <input type="text" id="faturamentoMensal" placeholder="R$">
+
+        <label for="confirmacaoRepresentante">
+            <input type="checkbox" id="confirmacaoRepresentante"> Eu confirmo que sou o representante legal da empresa.
+        </label>
+
+        <h3>Endereço do representante</h3>
+        <p class="subtitle">Forneça o endereço completo do representante da empresa para verificação e registro.</p>
+
+        <label for="cepRepresentante">CEP</label>
+        <input type="text" id="cepRepresentante" placeholder="73795-000">
+
+        <div class="small-inputs">
+            <div class="small">
+                <label for="bairroRepresentante">Bairro</label>
+                <input type="text" id="bairroRepresentante" placeholder="">
+            </div>
+            <div class="small">
+                <label for="ruaRepresentante">Rua</label>
+                <input type="text" id="ruaRepresentante" placeholder="">
+            </div>
+            <div class="small">
+                <label for="numeroRepresentante">Número</label>
+                <input type="text" id="numeroRepresentante" placeholder="">
+            </div>
+        </div>
+
+        <label for="complementoRepresentante">Complemento</label>
+        <input type="text" id="complementoRepresentante" placeholder="">
+
+        <label for="pontoReferenciaRepresentante">Ponto de referência</label>
+        <input type="text" id="pontoReferenciaRepresentante" placeholder="">
+
+        <label for="cidadeRepresentante">Cidade</label>
+        <input type="text" id="cidadeRepresentante" placeholder="Teresina de Goiás">
+
+        <label for="estadoRepresentante">Estado</label>
+        <input type="text" id="estadoRepresentante" placeholder="Goiás">
+    </div>
+
+    <div class="button">
+        <button type="button" onclick="goToNextPage()">Avançar</button>
+    </div>
+</div>
+
+<!-- Segunda página: Seleção de quarto -->
+<div class="container hidden" id="tablePage">
+    <h2 id="tituloEtapa">Passo 2 de 3 - Selecione o quarto e datas</h2>
+    <p class="subtitle" id="descricaoEtapa">Selecione o número do quarto, a data de entrada e saída, e veja os valores correspondentes.</p>
+
+    <div class="resumo" id="resumoHospede">
+        <h3>Resumo dos Dados do Hóspede</h3>
+        <div id="resumoDados"></div>
+    </div>
+
+    <div class="table-section">
+        <table>
+            <thead>
+                <tr>
+                    <th>Número do Quarto</th>
+                    <th>Data de Entrada</th>
+                    <th>Data de Saída</th>
+                    <th>Valor (R$)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" id="quartoNumero" min="1" max="100" placeholder="Ex: 101"></td>
+                    <td><input type="date" id="dataEntrada"></td>
+                    <td><input type="date" id="dataSaida"></td>
+                    <td><input type="text" id="valor" placeholder="Ex: 300,00"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="button">
+        <button type="button" onclick="goToFormPage()">Voltar</button>
+        <button type="button" onclick="goToFinalPage()">Confirmar</button>
+    </div>
+</div>
+
+<!-- Última página: Resumo e forma de pagamento -->
+<div class="container hidden" id="finalPage">
+    <h2 id="tituloEtapa">Passo 3 de 3 - Resumo e pagamento</h2>
+    <p class="subtitle" id="descricaoEtapa">Confira todas as informações antes de concluir a reserva.</p>
+
+    <div class="resumo">
+        <h3>Dados do Hóspede</h3>
+        <div id="resumoFinalDados"></div>
+    </div>
+
+    <div class="resumo">
+        <h3>Dados da Reserva</h3>
+        <p id="resumoQuartoNumero"></p>
+        <p id="resumoDataEntrada"></p>
+        <p id="resumoDataSaida"></p>
+        <p id="resumoValor"></p>
+    </div>
+
+    <div class="form-section">
+        <h3>Forma de Pagamento</h3>
+        <div class="radio-group">
+            <label class="radio-option payment-option" onclick="highlightPaymentOption(this)">
+                <input type="radio" name="pagamento" value="credito"> Cartão de Crédito
+            </label>
+            <label class="radio-option payment-option" onclick="highlightPaymentOption(this)">
+                <input type="radio" name="pagamento" value="debito"> Cartão de Débito
+            </label>
+            <label class="radio-option payment-option" onclick="highlightPaymentOption(this)">
+                <input type="radio" name="pagamento" value="pix"> Pix
+            </label>
+            <label class="radio-option payment-option" onclick="highlightPaymentOption(this)">
+                <input type="radio" name="pagamento" value="dinheiro"> Dinheiro
+            </label>
+            <label class="radio-option payment-option" onclick="highlightPaymentOption(this)">
+                <input type="radio" name="pagamento" value="cripto"> Criptomoedas
+            </label>
+        </div>
+    </div>
+
+    <div class="button">
+        <button type="button" onclick="goToTablePage()">Voltar</button>
+        <button type="submit">Finalizar</button>
+    </div>
+</div>
+
+<script>
+    function toggleForm(type) {
+        const pfOption = document.getElementById('pf-option');
+        const pjOption = document.getElementById('pj-option');
+        const formPessoaFisica = document.getElementById('formPessoaFisica');
+        const formPessoaJuridica = document.getElementById('formPessoaJuridica');
+        
+        if (type === 'pj') {
+            pjOption.classList.add('active');
+            pfOption.classList.remove('active');
+            formPessoaFisica.classList.add('hidden');
+            formPessoaJuridica.classList.remove('hidden');
+        } else {
+            pfOption.classList.add('active');
+            pjOption.classList.remove('active');
+            formPessoaFisica.classList.remove('hidden');
+            formPessoaJuridica.classList.add('hidden');
+        }
+    }
+
+    function goToNextPage() {
+        // Obter os valores inseridos pelo usuário para Pessoa Física ou Jurídica
+        let dadosResumo = '';
+        if (document.getElementById('pf-option').classList.contains('active')) {
+            dadosResumo += `Nome: ${document.getElementById('nome').value}<br>`;
+            dadosResumo += `Sobrenome: ${document.getElementById('sobrenome').value}<br>`;
+            dadosResumo += `Data de Nascimento: ${document.getElementById('dataNascimento').value}<br>`;
+            dadosResumo += `CPF: ${document.getElementById('cpf').value}<br>`;
+            dadosResumo += `E-mail: ${document.getElementById('email').value}<br>`;
+            dadosResumo += `Telefone: ${document.getElementById('telefone').value}<br>`;
+            dadosResumo += `CEP: ${document.getElementById('cepPF').value}<br>`;
+            dadosResumo += `Bairro: ${document.getElementById('bairroPF').value}<br>`;
+            dadosResumo += `Rua: ${document.getElementById('ruaPF').value}<br>`;
+            dadosResumo += `Número: ${document.getElementById('numeroPF').value}<br>`;
+            dadosResumo += `Complemento: ${document.getElementById('complementoPF').value}<br>`;
+            dadosResumo += `Cidade: ${document.getElementById('cidadePF').value}<br>`;
+            dadosResumo += `Estado: ${document.getElementById('estadoPF').value}<br>`;
+        } else {
+            dadosResumo += `Nome Fantasia: ${document.getElementById('nomeFantasia').value}<br>`;
+            dadosResumo += `Razão Social: ${document.getElementById('razaoSocial').value}<br>`;
+            dadosResumo += `CNPJ: ${document.getElementById('cnpj').value}<br>`;
+            dadosResumo += `E-mail: ${document.getElementById('emailPJ').value}<br>`;
+            dadosResumo += `Receita Anual: ${document.getElementById('receitaAnual').value}<br>`;
+            dadosResumo += `Nome do Representante: ${document.getElementById('nomeRepresentante').value}<br>`;
+            dadosResumo += `Sobrenome do Representante: ${document.getElementById('sobrenomeRepresentante').value}<br>`;
+            dadosResumo += `CPF do Representante: ${document.getElementById('cpfRepresentante').value}<br>`;
+            dadosResumo += `E-mail do Representante: ${document.getElementById('emailRepresentante').value}<br>`;
+            dadosResumo += `Telefone do Representante: ${document.getElementById('telefoneRepresentante').value}<br>`;
+            dadosResumo += `CEP do Representante: ${document.getElementById('cepRepresentante').value}<br>`;
+            dadosResumo += `Bairro do Representante: ${document.getElementById('bairroRepresentante').value}<br>`;
+            dadosResumo += `Rua do Representante: ${document.getElementById('ruaRepresentante').value}<br>`;
+            dadosResumo += `Número do Representante: ${document.getElementById('numeroRepresentante').value}<br>`;
+            dadosResumo += `Complemento do Representante: ${document.getElementById('complementoRepresentante').value}<br>`;
+            dadosResumo += `Cidade do Representante: ${document.getElementById('cidadeRepresentante').value}<br>`;
+            dadosResumo += `Estado do Representante: ${document.getElementById('estadoRepresentante').value}<br>`;
+        }
+
+        // Atualizar o resumo na próxima página
+        document.getElementById('resumoDados').innerHTML = dadosResumo;
+
+        // Atualizar título e descrição
+        document.getElementById('tituloEtapa').innerText = 'Passo 2 de 3 - Selecione o quarto e datas';
+        document.getElementById('descricaoEtapa').innerText = 'Selecione o número do quarto, a data de entrada e saída, e veja os valores correspondentes.';
+
+        // Mostrar a próxima página
+        document.getElementById('formPage').classList.add('hidden');
+        document.getElementById('tablePage').classList.remove('hidden');
+    }
+
+    function goToTablePage() {
+        // Atualizar título e descrição
+        document.getElementById('tituloEtapa').innerText = 'Passo 2 de 3 - Selecione o quarto e datas';
+        document.getElementById('descricaoEtapa').innerText = 'Selecione o número do quarto, a data de entrada e saída, e veja os valores correspondentes.';
+
+        // Mostrar a página anterior
+        document.getElementById('finalPage').classList.add('hidden');
+        document.getElementById('tablePage').classList.remove('hidden');
+    }
+
+    function goToFormPage() {
+        // Atualizar título e descrição
+        document.getElementById('tituloEtapa').innerText = 'Passo 1 de 3 - Cadastre suas informações';
+        document.getElementById('descricaoEtapa').innerText = 'Assim que suas informações de titularidade estiverem completas, você poderá adicionar seus dados bancários para receber pagamentos de maneira rápida e segura.';
+
+        // Mostrar a página anterior
+        document.getElementById('tablePage').classList.add('hidden');
+        document.getElementById('formPage').classList.remove('hidden');
+    }
+
+    function goToFinalPage() {
+        // Obter os valores da seleção de quarto
+        const quartoNumero = document.getElementById('quartoNumero').value;
+        const dataEntrada = document.getElementById('dataEntrada').value;
+        const dataSaida = document.getElementById('dataSaida').value;
+        const valor = document.getElementById('valor').value;
+
+        // Atualizar o resumo na última página
+        document.getElementById('resumoFinalDados').innerHTML = document.getElementById('resumoDados').innerHTML;
+
+        document.getElementById('resumoQuartoNumero').innerText = `Número do Quarto: ${quartoNumero}`;
+        document.getElementById('resumoDataEntrada').innerText = `Data de Entrada: ${dataEntrada}`;
+        document.getElementById('resumoDataSaida').innerText = `Data de Saída: ${dataSaida}`;
+        document.getElementById('resumoValor').innerText = `Valor: R$ ${valor}`;
+
+        // Atualizar título e descrição
+        document.getElementById('tituloEtapa').innerText = 'Passo 3 de 3 - Resumo e pagamento';
+        document.getElementById('descricaoEtapa').innerText = 'Confira todas as informações antes de concluir a reserva.';
+
+        // Mostrar a última página
+        document.getElementById('tablePage').classList.add('hidden');
+        document.getElementById('finalPage').classList.remove('hidden');
+    }
+
+    function highlightPaymentOption(option) {
+        // Remover a classe 'active' de todas as opções
+        const paymentOptions = document.querySelectorAll('.radio-option.payment-option');
+        paymentOptions.forEach(opt => opt.classList.remove('active'));
+        // Adicionar a classe 'active' à opção selecionada
+        option.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
